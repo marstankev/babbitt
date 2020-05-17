@@ -5,33 +5,62 @@
         <script src="./index.js"></script>
 
         <script>
-            function handleNewSequence() {
+                        function handleNewSequence() {
+                const sequenceElem = document.querySelector('#sequence')
+                sequenceElem.innerHTML = '';
+
                 Tone.Transport.stop()
                 Tone.Transport.cancel()
 
                 const sequence = buildSequence()
-                const sequenceString = sequence.join(' ')
-                const sequenceHTML = sequence.reduce((acc, note) => {
-                    return `${acc} <span id=${note} class='note'> ${note} </span>`
-                }, '')
-                const sequenceElem = document.querySelector('#sequence')
-                sequenceElem.innerHTML = sequenceHTML
-
+                                    .concat(buildSequence())
+                                    .concat(buildSequence())
+                                    .concat(buildSequence())
+                                    .concat(buildSequence())
+                                    .concat(buildSequence())
+                                    .concat(buildSequence())
+                                    .concat(buildSequence())
+                                    .concat(buildSequence())
+                                    .concat(buildSequence())
+                                    .concat(buildSequence())
+                                    .concat(buildSequence())
+                                    .concat(buildSequence())
+                                    .concat(buildSequence())
+                                    .concat(buildSequence())
+                                    .concat(buildSequence())
+                                    .concat(buildSequence())
+                                    .concat(buildSequence())
+                                    .concat(buildSequence())
+                                    .concat(buildSequence())
+                                    .concat(buildSequence())
+                                    .concat(buildSequence())
+                                    .concat(buildSequence())
+                                    .concat(buildSequence())
+                                    .concat(buildSequence())
+                                    .concat(buildSequence())
+                                    .concat(buildSequence())
+                                    .concat(buildSequence())
+                                    .concat(buildSequence())
+                                    .concat(buildSequence())
+                                    .concat(buildSequence())
+                
+                let count = 1;
                 const synth = new Tone.Synth().toDestination()
                 const synthPart = new Tone.Sequence(
                     function(time, note) {
                         if (time && note) {
                             // const noteWithOctave = note + randomIntFromRange(2, 4)
-                            if (time) synth.triggerAttackRelease(note + 3, "1000hz", time)
-                            
-                            const allNotes = document.getElementsByClassName('note')
-                            Array.from(allNotes).map(noteElem => noteElem.style.color = 'black')
-                            const currNote = document.getElementById(note)
-                            currNote.style.color = 'red'
+                            synth.triggerAttackRelease(note + 3, "1000hz", time)
+
+                            const br = count % 12 === 0 ? '<br>' : '';
+                            count++;
+                            const sequenceElem = document.querySelector('#sequence')
+                            const sequenceHTML = `${sequenceElem.innerHTML} <span id=${note} class='note'> ${note} </span> ${br}`
+                            sequenceElem.innerHTML = sequenceHTML
                         }
                     },
                     sequence,
-                    "8n"
+                    "4n"
                 )
 
                 synthPart.start()
