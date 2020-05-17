@@ -6,44 +6,44 @@
 
         <script>
             function handleNewSequence() {
-                Tone.Transport.stop();
-                Tone.Transport.cancel();
+                Tone.Transport.stop()
+                Tone.Transport.cancel()
 
                 const sequence = buildSequence()
-                const sequenceString = sequence.join(' ');
+                const sequenceString = sequence.join(' ')
                 const sequenceHTML = sequence.reduce((acc, note) => {
                     return `${acc} <span id=${note} class='note'> ${note} </span>`
                 }, '')
-                const sequenceElem = document.querySelector('#sequence');
-                sequenceElem.innerHTML = sequenceHTML;
+                const sequenceElem = document.querySelector('#sequence')
+                sequenceElem.innerHTML = sequenceHTML
 
-                const synth = new Tone.Synth().toDestination();
+                const synth = new Tone.Synth().toDestination()
                 const synthPart = new Tone.Sequence(
                     function(time, note) {
                         if (time && note) {
                             // const noteWithOctave = note + randomIntFromRange(2, 4)
-                            if (time) synth.triggerAttackRelease(note + 3, "1000hz", time);
+                            if (time) synth.triggerAttackRelease(note + 3, "1000hz", time)
                             
-                            const allNotes = document.getElementsByClassName('note');
+                            const allNotes = document.getElementsByClassName('note')
                             Array.from(allNotes).map(noteElem => noteElem.style.color = 'black')
-                            const currNote = document.getElementById(note);
-                            currNote.style.color = 'red';
+                            const currNote = document.getElementById(note)
+                            currNote.style.color = 'red'
                         }
                     },
                     sequence,
                     "8n"
-                );
+                )
 
-                synthPart.start();
-                Tone.Transport.start();
+                synthPart.start()
+                Tone.Transport.start()
             }
 
             function handlePause() {
-                Tone.Transport.pause();
+                Tone.Transport.pause()
             }
 
             function handleResume() {
-                Tone.Transport.start();
+                Tone.Transport.start()
             }
         </script>
     </head>
